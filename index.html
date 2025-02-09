@@ -1,1 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guess the Player</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; }
+        #stats { font-size: 20px; margin: 20px; }
+    </style>
+</head>
+<body>
+    <h1>Guess the Player</h1>
+    <div id="stats"></div>
+    <input type="text" id="guess" placeholder="Enter player's name">
+    <button onclick="checkGuess()">Submit</button>
+    <p id="message"></p>
+    <p>Score: <span id="score">0</span></p>
+
+    <script>
+        const players = {
+            "Player1": "Stats1",
+            "Player2": "Stats2",
+            "Player3": "Stats3"
+        };
+
+        let score = 0;
+        let currentPlayer = "";
+
+        function getRandomPlayer() {
+            const keys = Object.keys(players);
+            if (keys.length === 0) {
+                document.getElementById("stats").innerText = "Game Over! Final Score: " + score;
+                return;
+            }
+            currentPlayer = keys[Math.floor(Math.random() * keys.length)];
+            document.getElementById("stats").innerText = players[currentPlayer];
+        }
+
+        function checkGuess() {
+            const guess = document.getElementById("guess").value;
+            if (guess === currentPlayer) {
+                document.getElementById("message").innerText = "Correct!";
+                score++;
+                document.getElementById("score").innerText = score;
+                delete players[currentPlayer];
+                getRandomPlayer();
+            } else {
+                document.getElementById("message").innerText = "Incorrect! The correct answer was " + currentPlayer;
+            }
+        }
+
+        getRandomPlayer();
+    </script>
+</body>
+</html>
 
