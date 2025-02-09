@@ -53,11 +53,36 @@
     'KL Rahul': {'IPL Team': 'LSG', 'Country':'India', 'Age': '32', 'Jersey Number': '67'}, 
 };
 
+        <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guess the Cricket Player</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; }
+        #stats { font-size: 20px; margin: 20px; }
+    </style>
+</head>
+<body>
+    <h1>Guess the Player</h1>
+    <div id="stats"></div>
+    <input type="text" id="guess" placeholder="Enter player's name">
+    <button onclick="checkGuess()">Submit</button>
+    <button onclick="revealAnotherClue()">Another Clue</button>
+    <p id="message"></p>
+    <p>Score: <span id="score">0</span></p>
+
+    <script>
+        const players = {
+            'Virat Kohli': {'IPL Team': 'RCB', 'Country': 'India', 'Age': '36', 'Jersey Number': '18'},
+            'Rohit Sharma': {'IPL Team': 'MI', 'Country': 'India', 'Age': '37', 'Jersey Number': '45'},
+            'MS Dhoni': {'IPL Team': 'CSK', 'Country': 'India', 'Age': '43', 'Jersey Number': '7'},
+            'Steven Smith': {'IPL Team': 'None', 'Country': 'Australia', 'Age': '35', 'Jersey Number': '49'},
+            'Joe Root': {'IPL Team': 'None', 'Country': 'England', 'Age': '34', 'Jersey Number': '66'},
+        };
+
         let score = 0;
-        let currentPlayer = "";
-        let availableClues = [];
-        let revealedClues = [];
-let score = 0;
         let currentPlayer = "";
         let availableClues = [];
         let revealedClues = [];
@@ -71,6 +96,7 @@ let score = 0;
             currentPlayer = keys[Math.floor(Math.random() * keys.length)];
             availableClues = Object.entries(players[currentPlayer]);
             revealedClues = [];
+            document.getElementById("message").innerText = ""; // Clear message
             revealClue(); // Reveal one clue at start
         }
 
@@ -78,8 +104,8 @@ let score = 0;
             if (availableClues.length > 0) {
                 let clue = availableClues.splice(Math.floor(Math.random() * availableClues.length), 1)[0];
                 revealedClues.push(clue);
-                document.getElementById("stats").innerHTML = revealedClues.map(c => `${c[0]}: ${c[1]}`).join("<br>");
             }
+            updateStats();
         }
 
         function revealAnotherClue() {
@@ -88,6 +114,10 @@ let score = 0;
             } else {
                 document.getElementById("message").innerText = "No more clues available!";
             }
+        }
+
+        function updateStats() {
+            document.getElementById("stats").innerHTML = revealedClues.map(c => `${c[0]}: ${c[1]}`).join("<br>");
         }
 
         function checkGuess() {
