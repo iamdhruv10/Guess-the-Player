@@ -57,6 +57,10 @@
         let currentPlayer = "";
         let availableClues = [];
         let revealedClues = [];
+let score = 0;
+        let currentPlayer = "";
+        let availableClues = [];
+        let revealedClues = [];
 
         function getRandomPlayer() {
             const keys = Object.keys(players);
@@ -67,7 +71,7 @@
             currentPlayer = keys[Math.floor(Math.random() * keys.length)];
             availableClues = Object.entries(players[currentPlayer]);
             revealedClues = [];
-            revealClue();
+            revealClue(); // Reveal one clue at start
         }
 
         function revealClue() {
@@ -79,12 +83,16 @@
         }
 
         function revealAnotherClue() {
-            revealClue();
+            if (availableClues.length > 0) {
+                revealClue();
+            } else {
+                document.getElementById("message").innerText = "No more clues available!";
+            }
         }
 
         function checkGuess() {
-            const guess = document.getElementById("guess").value;
-            if (guess.trim().toLowerCase() === currentPlayer.toLowerCase()) {
+            const guess = document.getElementById("guess").value.trim().toLowerCase();
+            if (guess === currentPlayer.toLowerCase()) {
                 document.getElementById("message").innerText = "Correct!";
                 score++;
                 document.getElementById("score").innerText = score;
