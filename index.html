@@ -83,6 +83,27 @@
             document.getElementById("guess").value = "";
         }
 
+        function checkGuess() {
+            const guess = document.getElementById("guess").value;
+            
+            // Check if the guess is correct
+            if (guess.trim().toLowerCase() === currentPlayer.toLowerCase()) {
+                document.getElementById("message").innerText = "Correct!";
+                score++;
+                document.getElementById("score").innerText = score;
+                delete players[currentPlayer];
+                getRandomPlayer();
+            } else {
+                document.getElementById("message").innerText = `Incorrect! The correct answer was ${currentPlayer}`;
+                document.getElementById("stats").innerText = "Game Over! Final Score: " + score;
+                document.getElementById("guess").disabled = true;  // Disable the input field
+                document.querySelector("button").disabled = true;  // Disable the submit button
+            }
+            
+            // Clear the input field
+            document.getElementById("guess").value = "";
+        }
+
         getRandomPlayer();
     </script>
 </body>
