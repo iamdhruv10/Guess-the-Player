@@ -85,7 +85,7 @@
 
         function checkGuess() {
             const guess = document.getElementById("guess").value;
-            
+
             // Check if the guess is correct
             if (guess.trim().toLowerCase() === currentPlayer.toLowerCase()) {
                 document.getElementById("message").innerText = "Correct!";
@@ -96,10 +96,17 @@
             } else {
                 document.getElementById("message").innerText = `Incorrect! The correct answer was ${currentPlayer}`;
                 document.getElementById("stats").innerText = "Game Over! Final Score: " + score;
-                document.getElementById("guess").disabled = true;  // Disable the input field
-                document.querySelector("button").disabled = true;  // Disable the submit button
+
+                // Disable input and button immediately
+                document.getElementById("guess").disabled = true;
+                document.querySelector("button").disabled = true;
+
+                // Freeze for 2 seconds before reloading the page
+                setTimeout(() => {
+                    location.reload();  // Reload the page
+                }, 2000);  // 2-second delay
             }
-            
+
             // Clear the input field
             document.getElementById("guess").value = "";
         }
